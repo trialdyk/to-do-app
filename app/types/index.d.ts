@@ -13,12 +13,14 @@ export interface User {
 }
 
 export interface Mail {
-  id: number
+  id: number | string
   unread?: boolean
   from: User
   subject: string
   body: string
   date: string
+  type?: 'invite' | 'mail'
+  projectId?: string // for invites
 }
 
 export interface Member {

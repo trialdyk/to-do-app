@@ -3,8 +3,20 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
+    '@nuxtjs/supabase',
+    '@nuxtjs/i18n'
   ],
+
+  i18n: {
+    locales: [
+      { code: 'id', file: 'id.json', name: 'Indonesia' },
+      { code: 'en', file: 'en.json', name: 'English' }
+    ],
+    langDir: 'locales',
+    defaultLocale: 'id',
+    strategy: 'no_prefix'
+  },
 
   devtools: {
     enabled: true
@@ -26,6 +38,14 @@ export default defineNuxtConfig({
         commaDangle: 'never',
         braceStyle: '1tbs'
       }
+    }
+  },
+
+  supabase: {
+    redirectOptions: {
+      login: '/',
+      callback: '/confirm',
+      exclude: ['/', '/confirm']
     }
   }
 })

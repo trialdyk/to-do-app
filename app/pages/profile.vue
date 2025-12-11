@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Database } from '../../types/database.types'
+import type { Database } from '../types/database.types'
 
 definePageMeta({
   middleware: 'auth'
@@ -131,22 +131,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <UPageCard
-      title="General Settings"
-      description="Manage your profile information."
-      variant="naked"
-      orientation="horizontal"
-      class="mb-4"
-    >
-      <UButton
-        :loading="saving"
-        label="Save changes"
-        color="neutral"
-        class="w-fit lg:ms-auto"
-        @click="saveProfile"
-      />
-    </UPageCard>
+  <UContainer class="py-8 max-w-2xl">
+    <h1 class="text-2xl font-bold mb-8">User Profile</h1>
 
     <div v-if="loading" class="space-y-4">
       <USkeleton class="h-32 w-full rounded-lg" />
@@ -170,6 +156,10 @@ onMounted(() => {
 
       <!-- Edit Form -->
       <UCard>
+        <template #header>
+          <h3 class="text-lg font-medium">Edit Profile</h3>
+        </template>
+
         <div class="space-y-6">
           <UFormField label="Full Name">
             <UInput v-model="fullName" icon="i-lucide-user" />
@@ -207,7 +197,13 @@ onMounted(() => {
             </div>
           </UFormField>
         </div>
+
+        <template #footer>
+          <div class="flex justify-end">
+            <UButton :loading="saving" @click="saveProfile">Save Changes</UButton>
+          </div>
+        </template>
       </UCard>
     </div>
-  </div>
+  </UContainer>
 </template>

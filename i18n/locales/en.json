@@ -1,0 +1,66 @@
+{
+    "auth": {
+        "welcome": "Welcome Back",
+        "signInSubtitle": "Sign in to continue",
+        "signUpSubtitle": "Sign up to get started",
+        "createAccount": "Create an Account",
+        "continueWithGoogle": "Continue with Google",
+        "or": "Or",
+        "email": "Email",
+        "password": "Password",
+        "signIn": "Sign In",
+        "signUp": "Sign Up",
+        "haveAccount": "Already have an account?",
+        "noAccount": "Don't have an account?",
+        "checkEmail": "Check your email for the confirmation link!"
+    },
+    "dashboard": {
+        "title": "My Tasks",
+        "welcome": "Welcome back, {email}",
+        "level": "Level {level}",
+        "xp": "{xp} XP",
+        "levelProgress": "Level Progress",
+        "toNextLevel": "to Level {level}",
+        "stats": {
+            "pending": "Pending",
+            "dueToday": "Due Today",
+            "overdue": "Overdue",
+            "completed": "Completed"
+        },
+        "addTask": {
+            "placeholder": "Add a new task...",
+            "button": "Add"
+        },
+        "filters": {
+            "all": "All",
+            "today": "Today",
+            "upcoming": "Upcoming",
+            "overdue": "Overdue",
+            "completed": "Completed"
+        },
+        "empty": "No tasks found for this filter.",
+        "editTask": "Edit Task",
+        "editDescription": "Update your task details below",
+        "cancel": "Cancel",
+        "save": "Save Changes",
+        "deleteTask": "Delete Task",
+        "delete": "Delete",
+        "deleteConfirm": "Are you sure you want to delete this task?"
+    },
+    "common": {
+        "title": "Title",
+        "deadline": "Deadline",
+        "priority": "Priority",
+        "priorities": {
+            "low": "Low",
+            "medium": "Medium",
+            "high": "High"
+        }
+    },
+    "toast": {
+        "taskCreated": "Task created successfully",
+        "taskUpdated": "Task updated successfully",
+        "taskDeleted": "Task deleted successfully",
+        "levelUp": "Congratulations! You reached Level {level}!"
+    }
+}

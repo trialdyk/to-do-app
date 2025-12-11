@@ -6,7 +6,7 @@ defineProps<{
   mail: Mail
 }>()
 
-const emits = defineEmits(['close'])
+const emits = defineEmits(['close', 'respond'])
 
 const dropdownItems = [[{
   label: 'Mark as unread',
@@ -115,12 +115,20 @@ function onSubmit() {
         <template #header>
           <UIcon name="i-lucide-reply" class="size-5" />
 
-          <span class="text-sm truncate">
+          <span v-if="mail.type !== 'invite'" class="text-sm truncate">
             Reply to {{ mail.from.name }} ({{ mail.from.email }})
+          </span>
+          <span v-else class="text-sm truncate">
+            Invitation Actions
           </span>
         </template>
 
-        <form @submit.prevent="onSubmit">
+        <div v-if="mail.type === 'invite'" class="flex justify-end gap-2 p-4">
+          <UButton color="neutral" variant="ghost" @click="$emit('respond', { inviteId: mail.id, accept: false })">Decline</UButton>
+          <UButton color="primary" @click="$emit('respond', { inviteId: mail.id, accept: true })">Accept</UButton>
+        </div>
+
+        <form v-else @submit.prevent="onSubmit">
           <UTextarea
             v-model="reply"
             color="neutral"

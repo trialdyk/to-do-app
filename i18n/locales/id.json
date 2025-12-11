@@ -1,0 +1,66 @@
+{
+    "auth": {
+        "welcome": "Selamat Datang Kembali",
+        "signInSubtitle": "Masuk untuk melanjutkan",
+        "signUpSubtitle": "Daftar untuk memulai",
+        "createAccount": "Buat Akun",
+        "continueWithGoogle": "Lanjutkan dengan Google",
+        "or": "Atau",
+        "email": "Email",
+        "password": "Kata Sandi",
+        "signIn": "Masuk",
+        "signUp": "Daftar",
+        "haveAccount": "Sudah punya akun?",
+        "noAccount": "Belum punya akun?",
+        "checkEmail": "Periksa email Anda untuk tautan konfirmasi!"
+    },
+    "dashboard": {
+        "title": "Tugas Saya",
+        "welcome": "Selamat datang kembali, {email}",
+        "level": "Level {level}",
+        "xp": "{xp} XP",
+        "levelProgress": "Kemajuan Level",
+        "toNextLevel": "menuju Level {level}",
+        "stats": {
+            "pending": "Tertunda",
+            "dueToday": "Tenggat Hari Ini",
+            "overdue": "Terlewat",
+            "completed": "Selesai"
+        },
+        "addTask": {
+            "placeholder": "Tambah tugas baru...",
+            "button": "Tambah"
+        },
+        "filters": {
+            "all": "Semua",
+            "today": "Hari Ini",
+            "upcoming": "Mendatang",
+            "overdue": "Terlewat",
+            "completed": "Selesai"
+        },
+        "empty": "Tidak ada tugas ditemukan untuk filter ini.",
+        "editTask": "Edit Tugas",
+        "editDescription": "Perbarui detail tugas Anda di bawah ini",
+        "cancel": "Batal",
+        "save": "Simpan Perubahan",
+        "deleteTask": "Hapus Tugas",
+        "delete": "Hapus",
+        "deleteConfirm": "Apakah Anda yakin ingin menghapus tugas ini?"
+    },
+    "common": {
+        "title": "Judul",
+        "deadline": "Tenggat Waktu",
+        "priority": "Prioritas",
+        "priorities": {
+            "low": "Rendah",
+            "medium": "Sedang",
+            "high": "Tinggi"
+        }
+    },
+    "toast": {
+        "taskCreated": "Tugas berhasil dibuat",
+        "taskUpdated": "Tugas berhasil diperbarui",
+        "taskDeleted": "Tugas berhasil dihapus",
+        "levelUp": "Selamat! Anda naik ke Level {level}!"
+    }
+}

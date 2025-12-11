@@ -12,7 +12,54 @@ const tabItems = [{
 }]
 const selectedTab = ref('all')
 
-const { data: mails } = await useFetch<Mail[]>('/api/mails', { default: () => [] })
+// Combine mock mails with real invites
+const { data: invitesData, refresh: refreshInvites } = await useFetch('/api/users/invites')
+
+const mappedInvites = computed(() => {
+  if (!invitesData.value?.invites) return []
+  return invitesData.value.invites.map((invite: any) => ({
+    id: invite.id,
+    unread: true, // Invites are always "active"
+    from: {
+      id: 0,
+      name: 'System',
+      email: 'noreply@system.com',
+      status: 'subscribed' as const,
+      location: 'System',
+      avatar: { src: '', alt: 'System' }
+    },
+    subject: `Invitation to join ${invite.projects?.name}`,
+    body: `You have been invited to join the project "${invite.projects?.name}". Please accept or decline this invitation below.`,
+    date: invite.created_at,
+    type: 'invite' as const,
+    projectId: invite.project_id
+  }))
+})
+
+const mails = computed(() => mappedInvites.value)
+const toast = useToast()
+
+const handleRespond = async ({ inviteId, accept }: { inviteId: string, accept: boolean }) => {
+  try {
+    const { error } = await useFetch('/api/projects/invite', {
+      method: 'PUT',
+      body: { inviteId, accept }
+    })
+    
+    if (error.value) throw error.value
+
+    toast.add({ 
+      title: accept ? 'Joined project successfully' : 'Invite declined', 
+      icon: accept ? 'i-lucide-check-circle' : 'i-lucide-x-circle'
+    })
+    
+    selectedMail.value = null
+    refreshInvites()
+    
+  } catch (e: any) {
+    toast.add({ title: 'Error processing invite', description: e.message, color: 'error' })
+  }
+} // Remove fetch call
 
 // Filter mails based on the selected tab
 const filteredMails = computed(() => {
@@ -75,15 +122,15 @@ const isMobile = breakpoints.smaller('lg')
     <InboxList v-model="selectedMail" :mails="filteredMails" />
   </UDashboardPanel>
 
-  <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+  <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" @respond="handleRespond" />
   <div v-else class="hidden lg:flex flex-1 items-center justify-center">
-    <UIcon name="i-lucide-inbox" class="size-32 text-dimmed" />
+    <UIcon name="i-lucide-inbox" class="size-32 text-gray-300 dark:text-gray-700" />
   </div>
 
   <ClientOnly>
     <USlideover v-if="isMobile" v-model:open="isMailPanelOpen">
       <template #content>
-        <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+        <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" @respond="handleRespond" />
       </template>
     </USlideover>
   </ClientOnly>
