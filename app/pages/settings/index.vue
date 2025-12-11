@@ -8,6 +8,7 @@ definePageMeta({
 const client = useSupabaseClient<Database>()
 const user = useSupabaseUser()
 const toast = useToast()
+const { t } = useI18n()
 
 const loading = ref(true)
 const saving = ref(false)
@@ -65,7 +66,9 @@ const syncProfile = async (currentUser: any) => {
   if (data) {
     profile.value = data
     fullName.value = data.full_name || ''
-    toast.add({ title: 'Profile synchronized from Google' })
+    profile.value = data
+    fullName.value = data.full_name || ''
+    toast.add({ title: t('settings.profile.toast.syncSuccess'), color: 'success' })
   } else if (error) {
     console.error('Error syncing profile:', error)
   }
@@ -86,15 +89,15 @@ const saveProfile = async () => {
     const { error } = await client.from('profiles').update(updates).eq('id', currentUser.id)
 
     if (error) {
-      toast.add({ title: 'Error saving profile', color: 'error' })
+      toast.add({ title: t('settings.profile.toast.saveError'), color: 'error' })
     } else {
-      toast.add({ title: 'Profile updated successfully', icon: 'i-lucide-check-circle' })
+      toast.add({ title: t('settings.profile.toast.saveSuccess'), icon: 'i-lucide-check-circle', color: 'success' })
       if (profile.value) {
         profile.value = { ...profile.value, ...updates }
       }
     }
   } catch (e) {
-    toast.add({ title: 'User not authenticated', color: 'error' })
+    toast.add({ title: t('settings.profile.toast.unauthenticated'), color: 'error' })
   } finally {
     saving.value = false
   }
@@ -133,16 +136,16 @@ onMounted(() => {
 <template>
   <div>
     <UPageCard
-      title="General Settings"
-      description="Manage your profile information."
+      :title="t('settings.profile.title')"
+      :description="t('settings.profile.description')"
       variant="naked"
       orientation="horizontal"
       class="mb-4"
     >
       <UButton
         :loading="saving"
-        label="Save changes"
-        color="neutral"
+        :label="t('settings.profile.save')"
+        color="primary"
         class="w-fit lg:ms-auto"
         @click="saveProfile"
       />
@@ -171,20 +174,20 @@ onMounted(() => {
       <!-- Edit Form -->
       <UCard>
         <div class="space-y-6">
-          <UFormField label="Full Name">
+          <UFormField :label="t('settings.profile.fullName')">
             <UInput v-model="fullName" icon="i-lucide-user" />
           </UFormField>
 
-          <UFormField label="Bio / Description">
-            <UTextarea v-model="bio" placeholder="Tell us about yourself..." :rows="4" />
+          <UFormField :label="t('settings.profile.bio')">
+            <UTextarea v-model="bio" :placeholder="t('settings.profile.bioPlaceholder')" :rows="4" />
           </UFormField>
 
-          <UFormField label="Personal Tags">
+          <UFormField :label="t('settings.profile.tags')">
             <div class="space-y-3">
               <div class="flex gap-2">
                 <UInput 
                   v-model="newTag" 
-                  placeholder="Add a tag (e.g. Developer, Designer)" 
+                  :placeholder="t('settings.profile.addTagPlaceholder')" 
                   @keyup.enter="addTag"
                   class="flex-1"
                 />

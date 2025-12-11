@@ -45,9 +45,15 @@ export const useAuth = () => {
         return u
     }
 
+    const signOut = async () => {
+        await client.auth.signOut()
+        navigateTo('/')
+    }
+
     return {
         user,
         getCurrentUser,
-        requireUser
+        requireUser,
+        signOut
     }
 }

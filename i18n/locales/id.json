@@ -58,9 +58,64 @@
         }
     },
     "toast": {
-        "taskCreated": "Tugas berhasil dibuat",
-        "taskUpdated": "Tugas berhasil diperbarui",
-        "taskDeleted": "Tugas berhasil dihapus",
+        "taskCreated": "Tugas Dibuat",
+        "taskCreatedDesc": "Tugas baru Anda telah berhasil dibuat.",
+        "taskUpdated": "Tugas Diperbarui",
+        "taskUpdatedDesc": "Detail tugas telah berhasil diperbarui.",
+        "taskDeleted": "Tugas Dihapus",
+        "taskDeletedDesc": "Tugas tersebut telah dihapus secara permanen.",
         "levelUp": "Selamat! Anda naik ke Level {level}!"
+    },
+    "settings": {
+        "nav": {
+            "general": "Umum",
+            "security": "Keamanan",
+            "documentation": "Dokumentasi"
+        },
+        "profile": {
+            "title": "Pengaturan Umum",
+            "description": "Kelola informasi profil Anda.",
+            "save": "Simpan perubahan",
+            "fullName": "Nama Lengkap",
+            "bio": "Bio / Deskripsi",
+            "bioPlaceholder": "Ceritakan tentang diri Anda...",
+            "tags": "Tag Pribadi",
+            "addTagPlaceholder": "Tambah tag (mis. Pengembang, Desainer)",
+            "toast": {
+                "syncSuccess": "Profil disinkronisasi dari Google",
+                "saveSuccess": "Profil berhasil diperbarui",
+                "saveError": "Gagal menyimpan profil",
+                "unauthenticated": "Pengguna tidak terautentikasi"
+            }
+        },
+        "security": {
+            "password": {
+                "title": "Kata Sandi",
+                "description": "Konfirmasi kata sandi Anda saat ini sebelum menetapkan yang baru.",
+                "current": "Kata sandi saat ini",
+                "new": "Kata sandi baru",
+                "update": "Perbarui",
+                "error": {
+                    "mismatch": "Kata sandi harus berbeda",
+                    "min": "Minimal 8 karakter"
+                }
+            },
+            "account": {
+                "title": "Akun",
+                "description": "Tidak ingin lagi menggunakan layanan kami? Anda dapat menghapus akun Anda di sini. Tindakan ini tidak dapat dibatalkan. Semua informasi yang terkait dengan akun ini akan dihapus secara permanen.",
+                "delete": "Hapus akun"
+            }
+        }
+    },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "tasks": "Tugas",
+        "projects": "Proyek",
+        "inbox": "Kotak Masuk",
+        "feedback": "Masukan",
+        "help": "Bantuan & Dukungan",
+        "groups": {
+            "goto": "Pergi ke"
+        }
     }
 }

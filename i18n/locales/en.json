@@ -58,9 +58,64 @@
         }
     },
     "toast": {
-        "taskCreated": "Task created successfully",
-        "taskUpdated": "Task updated successfully",
-        "taskDeleted": "Task deleted successfully",
+        "taskCreated": "Task Created",
+        "taskCreatedDesc": "Your new task has been successfully created.",
+        "taskUpdated": "Task Updated",
+        "taskUpdatedDesc": "Task details have been successfully updated.",
+        "taskDeleted": "Task Deleted",
+        "taskDeletedDesc": "The task has been permanently removed.",
         "levelUp": "Congratulations! You reached Level {level}!"
+    },
+    "settings": {
+        "nav": {
+            "general": "General",
+            "security": "Security",
+            "documentation": "Documentation"
+        },
+        "profile": {
+            "title": "General Settings",
+            "description": "Manage your profile information.",
+            "save": "Save changes",
+            "fullName": "Full Name",
+            "bio": "Bio / Description",
+            "bioPlaceholder": "Tell us about yourself...",
+            "tags": "Personal Tags",
+            "addTagPlaceholder": "Add a tag (e.g. Developer, Designer)",
+            "toast": {
+                "syncSuccess": "Profile synchronized from Google",
+                "saveSuccess": "Profile updated successfully",
+                "saveError": "Error saving profile",
+                "unauthenticated": "User not authenticated"
+            }
+        },
+        "security": {
+            "password": {
+                "title": "Password",
+                "description": "Confirm your current password before setting a new one.",
+                "current": "Current password",
+                "new": "New password",
+                "update": "Update",
+                "error": {
+                    "mismatch": "Passwords must be different",
+                    "min": "Must be at least 8 characters"
+                }
+            },
+            "account": {
+                "title": "Account",
+                "description": "No longer want to use our service? You can delete your account here. This action is not reversible. All information related to this account will be deleted permanently.",
+                "delete": "Delete account"
+            }
+        }
+    },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "tasks": "Tasks",
+        "projects": "Projects",
+        "inbox": "Inbox",
+        "feedback": "Feedback",
+        "help": "Help & Support",
+        "groups": {
+            "goto": "Go to"
+        }
     }
 }

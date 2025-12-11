@@ -3,73 +3,54 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
 const toast = useToast()
+const { t } = useI18n()
 
 const open = ref(false)
 
-const links = [[{
-  label: 'Dashboard',
+const links = computed(() => [[{
+  label: t('sidebar.dashboard'),
   icon: 'i-lucide-layout-dashboard',
   to: '/dashboard',
   onSelect: () => {
     open.value = false
   }
 }, {
-  label: 'Tasks',
+  label: t('sidebar.tasks'),
   icon: 'i-lucide-list-todo',
   to: '/tasks',
   onSelect: () => {
     open.value = false
   }
 }, {
-  label: 'Projects',
+  label: t('sidebar.projects'),
   icon: 'i-lucide-folder-kanban',
   to: '/projects',
   onSelect: () => {
     open.value = false
   }
 }, {
-  label: 'Inbox',
+  label: t('sidebar.inbox'),
   icon: 'i-lucide-inbox',
   to: '/inbox',
   onSelect: () => {
     open.value = false
   }
-}, {
-  label: 'Settings',
-  to: '/settings',
-  icon: 'i-lucide-settings',
-  defaultOpen: true,
-  type: 'trigger',
-  children: [{
-    label: 'General',
-    to: '/settings',
-    exact: true,
-    onSelect: () => {
-      open.value = false
-    }
-    }, {
-    label: 'Security',
-    to: '/settings/security',
-    onSelect: () => {
-      open.value = false
-    }
-  }]
 }], [{
-  label: 'Feedback',
+  label: t('sidebar.feedback'),
   icon: 'i-lucide-message-circle',
   to: 'https://wa.me/6283165721585',
   target: '_blank'
 }, {
-  label: 'Help & Support',
+  label: t('sidebar.help'),
   icon: 'i-lucide-info',
   to: 'https://wa.me/6283165721585',
   target: '_blank'
-}]] satisfies NavigationMenuItem[][]
+}]] satisfies NavigationMenuItem[][])
 
 const groups = computed(() => [{
   id: 'links',
-  label: 'Go to',
-  items: links.flat()
+  label: t('sidebar.groups.goto'),
+  items: links.value.flat()
 }])
 
 onMounted(async () => {
@@ -109,7 +90,15 @@ onMounted(async () => {
       :ui="{ footer: 'lg:border-t lg:border-default' }"
     >
       <template #header="{ collapsed }">
-        <!-- TeamsMenu removed -->
+        <NuxtLink to="/dashboard" class="flex items-center gap-2 px-2 w-full">
+            <template v-if="collapsed">
+                <img src="/favicon.svg" alt="Logo" class="w-8 h-8 rounded-lg" />
+            </template>
+            <template v-else>
+                <img src="/favicon.svg" alt="Logo" class="w-8 h-8 rounded-lg" />
+                <span class="font-bold text-gray-900 dark:text-white truncate">To Do App</span>
+            </template>
+        </NuxtLink>
       </template>
 
       <template #default="{ collapsed }">
@@ -139,6 +128,20 @@ onMounted(async () => {
 
     <UDashboardSearch :groups="groups" />
 
-    <slot />
+  <UDashboardPanel id="home">
+    <template #header>
+      <UDashboardNavbar title="Home" :ui="{ right: 'gap-3' }">
+        <template #leading>
+          <UDashboardSidebarCollapse />
+        </template>
+      </UDashboardNavbar>
+
+    </template>
+
+    <template #body>
+      <slot />
+    </template>
+  </UDashboardPanel>
+    
   </UDashboardGroup>
 </template>

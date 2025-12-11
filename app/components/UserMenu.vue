@@ -7,6 +7,7 @@ defineProps<{
 
 const colorMode = useColorMode()
 const appConfig = useAppConfig()
+const { locale, setLocale } = useI18n()
 
 const colors = ['red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose']
 const neutrals = ['slate', 'gray', 'zinc', 'neutral', 'stone']
@@ -29,10 +30,6 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
 }], [{
   label: 'Profile',
   icon: 'i-lucide-user',
-  to: '/settings'
-}, {
-  label: 'Settings',
-  icon: 'i-lucide-settings',
   to: '/settings'
 }], [{
   label: 'Theme',
@@ -103,6 +100,26 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
     },
     onSelect(e: Event) {
       e.preventDefault()
+    }
+  }]
+}, {
+  label: 'Language',
+  icon: 'i-lucide-languages',
+  children: [{
+    label: 'English',
+    type: 'checkbox',
+    checked: locale.value === 'en',
+    onSelect(e: Event) {
+      e.preventDefault()
+      setLocale('en')
+    }
+  }, {
+    label: 'Bahasa Indonesia',
+    type: 'checkbox',
+    checked: locale.value === 'id',
+    onSelect(e: Event) {
+      e.preventDefault()
+      setLocale('id')
     }
   }]
 }], [{

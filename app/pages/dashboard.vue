@@ -6,19 +6,10 @@ import confetti from 'canvas-confetti'
 import { format, isToday, isPast, isFuture, parseISO, isSameDay } from 'date-fns'
 import type { Database } from '../types/database.types'
 
-const { t, locale, setLocale } = useI18n()
+const { t } = useI18n()
 const toast = useToast()
-const user = useSupabaseUser()
+const { user, signOut } = useAuth()
 const client = useSupabaseClient<Database>()
-
-const availableLocales = [
-  { code: 'id', name: 'ID' },
-  { code: 'en', name: 'EN' }
-]
-
-const switchLocale = (code: 'id' | 'en') => {
-  setLocale(code)
-}
 
 type Task = Database['public']['Tables']['tasks']['Row']
 
@@ -137,7 +128,12 @@ const addTask = async () => {
 
   if (data) {
     tasks.value.unshift(data)
-    toast.add({ title: t('toast.taskCreated'), icon: 'i-lucide-check-circle' })
+    toast.add({
+      title: t('toast.taskCreated'),
+      description: t('toast.taskCreatedDesc'),
+      icon: 'i-lucide-check-circle',
+      color: 'success'
+    })
   }
   newTask.value = ''
   newPriority.value = 'medium'
@@ -180,7 +176,12 @@ const confirmDelete = async () => {
   tasks.value = tasks.value.filter(t => t.id !== id)
   await client.from('tasks').delete().eq('id', id)
   calculateStats()
-  toast.add({ title: t('toast.taskDeleted'), icon: 'i-lucide-trash-2' })
+  toast.add({
+    title: t('toast.taskDeleted'),
+    description: t('toast.taskDeletedDesc'),
+    icon: 'i-lucide-trash-2',
+    color: 'success'
+  })
   
   isDeleteModalOpen.value = false
   taskToDelete.value = null
@@ -217,41 +218,16 @@ const saveEdit = async () => {
       tasks.value[index] = data
     }
     isEditModalOpen.value = false
-    toast.add({ title: t('toast.taskUpdated'), icon: 'i-lucide-check-circle' })
+    toast.add({
+      title: t('toast.taskUpdated'),
+      description: t('toast.taskUpdatedDesc'),
+      icon: 'i-lucide-check-circle',
+      color: 'success'
+    })
   }
   editLoading.value = false
 }
 
-const signOut = async () => {
-  await client.auth.signOut()
-  navigateTo('/')
-}
-
-const getPriorityColor = (priority: string) => {
-  switch (priority) {
-    case 'high': return 'error'
-    case 'medium': return 'warning'
-    case 'low': return 'success'
-    default: return 'neutral'
-  }
-}
-
-const formatDate = (dateString: string | null) => {
-  if (!dateString || dateString === 'default' || dateString === 'No Date') return dateString || ''
-  try {
-    return format(parseISO(dateString), 'MMM d, yyyy')
-  } catch (e) {
-    return dateString
-  }
-}
-
-const getDeadlineColor = (dateString: string | null, completed: boolean) => {
-  if (!dateString || completed) return 'text-gray-500 dark:text-gray-400'
-  const date = parseISO(dateString)
-  if (isSameDay(date, new Date())) return 'text-yellow-500 dark:text-yellow-400 font-bold'
-  if (isPast(date)) return 'text-red-500 dark:text-red-400 font-bold'
-  return 'text-gray-500 dark:text-gray-400'
-}
 
 onMounted(() => {
   fetchTasks()
@@ -273,21 +249,6 @@ onMounted(() => {
         </p>
       </div>
       <div class="flex gap-2">
-        <div class="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
-          <button
-            v-for="l in availableLocales"
-            :key="l.code"
-            @click="switchLocale(l.code as 'id' | 'en')"
-            :class="[
-              'px-3 py-1 text-xs font-medium rounded-md transition-colors',
-              locale === l.code 
-                ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm' 
-                : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-            ]"
-          >
-            {{ l.name }}
-          </button>
-        </div>
         <UButton
           color="neutral"
           variant="ghost"

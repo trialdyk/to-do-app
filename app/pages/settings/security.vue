@@ -2,12 +2,20 @@
 import * as z from 'zod'
 import type { FormError } from '@nuxt/ui'
 
-const passwordSchema = z.object({
-  current: z.string().min(8, 'Must be at least 8 characters'),
-  new: z.string().min(8, 'Must be at least 8 characters')
+const { t } = useI18n()
+
+// Static schema for typing
+const baseSchema = z.object({
+  current: z.string(),
+  new: z.string()
 })
 
-type PasswordSchema = z.output<typeof passwordSchema>
+type PasswordSchema = z.output<typeof baseSchema>
+
+const passwordSchema = computed(() => z.object({
+  current: z.string().min(8, t('settings.security.password.error.min')),
+  new: z.string().min(8, t('settings.security.password.error.min'))
+}))
 
 const password = reactive<Partial<PasswordSchema>>({
   current: undefined,
@@ -17,7 +25,7 @@ const password = reactive<Partial<PasswordSchema>>({
 const validate = (state: Partial<PasswordSchema>): FormError[] => {
   const errors: FormError[] = []
   if (state.current && state.new && state.current === state.new) {
-    errors.push({ name: 'new', message: 'Passwords must be different' })
+    errors.push({ name: 'new', message: t('settings.security.password.error.mismatch') })
   }
   return errors
 }
@@ -25,8 +33,8 @@ const validate = (state: Partial<PasswordSchema>): FormError[] => {
 
 <template>
   <UPageCard
-    title="Password"
-    description="Confirm your current password before setting a new one."
+    :title="t('settings.security.password.title')"
+    :description="t('settings.security.password.description')"
     variant="subtle"
   >
     <UForm
@@ -39,7 +47,7 @@ const validate = (state: Partial<PasswordSchema>): FormError[] => {
         <UInput
           v-model="password.current"
           type="password"
-          placeholder="Current password"
+          :placeholder="t('settings.security.password.current')"
           class="w-full"
         />
       </UFormField>
@@ -48,22 +56,22 @@ const validate = (state: Partial<PasswordSchema>): FormError[] => {
         <UInput
           v-model="password.new"
           type="password"
-          placeholder="New password"
+          :placeholder="t('settings.security.password.new')"
           class="w-full"
         />
       </UFormField>
 
-      <UButton label="Update" class="w-fit" type="submit" />
+      <UButton :label="t('settings.security.password.update')" class="w-fit" type="submit" />
     </UForm>
   </UPageCard>
 
   <UPageCard
-    title="Account"
-    description="No longer want to use our service? You can delete your account here. This action is not reversible. All information related to this account will be deleted permanently."
+    :title="t('settings.security.account.title')"
+    :description="t('settings.security.account.description')"
     class="bg-gradient-to-tl from-error/10 from-5% to-default"
   >
     <template #footer>
-      <UButton label="Delete account" color="error" />
+      <UButton :label="t('settings.security.account.delete')" color="error" />
     </template>
   </UPageCard>
 </template>
